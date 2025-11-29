@@ -51,5 +51,52 @@
         <pre id="raw">{}</pre>
       </section>
     </main>
+    <script>
+  const dateInput = document.getElementById("date");
+  const loadBtn = document.getElementById("load");
+  const errorDiv = document.getElementById("error");
+  const cards = document.getElementById("cards");
+
+  dateInput.value = "2024-11-01";
+
+  function fmtMoney(n) {
+    return new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(n);
+  }
+  function fmtInt(n) {
+    return new Intl.NumberFormat().format(n);
+  }
+
+  async function loadSummary() {
+    errorDiv.textContent = "";
+    cards.style.display = "none";
+
+    const date = dateInput.value;
+    if (!date) {
+      errorDiv.textContent = "Please select a date.";
+      return;
+    }
+
+    const url = `/metrics/daily-summary?date=${encodeURIComponent(date)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+
+    document.getElementById("raw").textContent = JSON.stringify(data, null, 2);
+
+    if (!res.ok) {
+      errorDiv.textContent = data.error || "Request failed.";
+      return;
+    }
+
+    document.getElementById("out-date").textContent = data.date;
+    document.getElementById("out-tx").textContent = fmtInt(data.total_transactions);
+    document.getElementById("out-rev").textContent = fmtMoney(data.total_revenue);
+    document.getElementById("out-rating").textContent = Number(data.avg_rating).toFixed(2);
+
+    cards.style.display = "block";
+  }
+
+  loadBtn.addEventListener("click", loadSummary);
+  loadSummary();
+</script>
   </body>
 </html>
