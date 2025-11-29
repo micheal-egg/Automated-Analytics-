@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Analytics Dashboard</title>
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <h1>Daily Metrics Summary</h1>
+        <p>
+          This page will call <code>/metrics/daily-summary?date=YYYY-MM-DD</code>
+          and display the returned data.
+        </p>
+      </header>
+
+      <section>
+        <label for="date">Select date</label>
+        <input id="date" type="date" />
+        <button id="load">Load Summary</button>
+        <div id="error"></div>
+      </section>
+
+      <section id="cards" style="display:none;">
+        <div>
+          <div>Date</div>
+          <div id="out-date">—</div>
+        </div>
+
+        <div>
+          <div>Total Transactions</div>
+          <div id="out-tx">—</div>
+        </div>
+
+        <div>
+          <div>Total Revenue</div>
+          <div id="out-rev">—</div>
+        </div>
+
+        <div>
+          <div>Average Rating</div>
+          <div id="out-rating">—</div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Raw JSON</h2>
+        <pre id="raw">{}</pre>
+      </section>
+    </main>
+  </body>
+</html>

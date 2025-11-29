@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 from app.db import get_conn, init_db
 
@@ -9,6 +9,10 @@ def create_app() -> Flask:
     @app.get("/health")
     def health():
         return jsonify({"status": "ok"})
+    @app.get("/")
+    def dashboard():
+        return render_template("dashboard.html")
+
 
     @app.get("/metrics/daily-summary")
     def daily_summary():
